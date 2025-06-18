@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presupuesto</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="navbar-container">
+            <h1>Solicita tu Presupuesto</h1>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="galeria.html">Galería</a></li>
+                    <li><a href="presupuesto.html" class="active">Presupuesto</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div id="content">
+    <section id="formulario" >
+        <h2>Completa tus datos</h2>
+        <form id="presupuesto-form">
+            <fieldset>
+                <legend>Datos de contacto</legend>
+                <label for="nombre">Nombre:</label> <input type="text" id="nombre">
+                <label>Apellidos: <input type="text" id="apellidos"></label>
+                <label>Teléfono: <input type="text" id="telefono"></label>
+                <label>Email: <input type="email" id="email"></label>
+            </fieldset>
+
+            <fieldset>
+                <legend>Elige tu producto</legend>
+                <select id="producto">
+                    <option value="100">Página Web - 100€</option>
+                    <option value="200">Tienda Online - 200€</option>
+                    <option value="300">App Móvil - 300€</option>
+                </select>
+            </fieldset>
+
+            <fieldset>
+                <legend>Plazo de entrega</legend>
+                <label>Días: <input type="number" id="plazo" min="1" max="60" value="30"></label>
+            </fieldset>
+
+            <fieldset>
+                <legend>Extras</legend>
+                <label><input type="checkbox" class="extra" value="50"> SEO Avanzado (+50€)</label>
+                <label><input type="checkbox" class="extra" value="100"> Diseño Premium (+100€)</label>
+            </fieldset>
+
+            <fieldset>
+                <legend>Presupuesto total</legend>
+                <p id="total">Total: 0€</p>
+            </fieldset>
+
+            <label><input type="checkbox" id="condiciones"> Acepto las condiciones</label>
+            <button type="submit">Enviar</button>
+            <button type="reset">Resetear</button>
+        </form>
+    </section>
+    </div>
+    <footer>
+        <p>&copy; 2025 Mi Empresa - Todos los derechos reservados </p>
+         <p>Dirección: Calle Principal, 123, Moncófar, España </p>
+        <div class="redes-sociales">
+            <a href="https://twitter.com/" target="_blank">
+            <img src="../assets/x.png" alt="Twitter" width="30" height="30">
+        </a>
+        <a href="https://facebook.com/" target="_blank">
+            <img src="../assets/facebook.png" alt="Facebook" width="30" height="30">
+        </a>
+        <a href="https://linkedin.com/in/" target="_blank">
+            <img src="../assets/linkedin.png" alt="LinkedIn" width="30" height="30">
+        </a>
+    </div>
+    </footer>
+    <script src="../js/presupuesto.js" defer></script>
+    <script src="../js/scroll.js"></script>
+</body>
+</html>
