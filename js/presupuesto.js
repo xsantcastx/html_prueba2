@@ -76,11 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Debes aceptar las condiciones.");
             return;
         }
-
-        // ✅ Mensaje visual
         alert("Formulario enviado correctamente.");
-
-        // ✅ Reanudamos el envío manualmente con submit “real”
         form.submit();
     });
 });
