@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("presupuesto-form");
     const producto = document.getElementById("producto");
     const plazo = document.getElementById("plazo");
@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
         mensajeError.style.display = "block";
         campo.parentNode.appendChild(mensajeError);
 
-        campo.addEventListener("input", function() {
+        campo.addEventListener("input", function () {
             if (this.value.length > maxLength) {
                 this.value = this.value.substring(0, maxLength);
             }
@@ -27,9 +27,10 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // ⚠️ Validamos con exactamente 9 cifras: ^[0-9]{9}$
     validarCampo(document.getElementById("nombre"), /^[A-Za-z]{1,15}$/, 15);
     validarCampo(document.getElementById("apellidos"), /^[A-Za-z ]{1,40}$/, 40);
-    validarCampo(document.getElementById("telefono"), /^[0-9]{1,9}$/, 9);
+    validarCampo(document.getElementById("telefono"), /^[0-9]{9}$/, 9);
     validarCampo(document.getElementById("email"), /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/, 50);
 
     function calcularPresupuesto() {
@@ -48,8 +49,8 @@ document.addEventListener("DOMContentLoaded", function() {
     plazo.addEventListener("input", calcularPresupuesto);
     extras.forEach(extra => extra.addEventListener("change", calcularPresupuesto));
 
-    form.addEventListener("submit", function(event) {
-        event.preventDefault();
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); // detenemos el envío para hacer las comprobaciones
 
         const nombre = document.getElementById("nombre");
         const apellidos = document.getElementById("apellidos");
@@ -76,6 +77,10 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
+        // ✅ Mensaje visual
         alert("Formulario enviado correctamente.");
+
+        // ✅ Reanudamos el envío manualmente con submit “real”
+        form.submit();
     });
 });

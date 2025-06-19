@@ -11,8 +11,28 @@ document.addEventListener("DOMContentLoaded", function() {
             const visitante = [position.coords.latitude, position.coords.longitude];
 
             L.marker(visitante).addTo(map).bindPopup("Tu ubicación").openPopup();
+            fetch('https://api.openrouteservice.org/v2/directions/driving-car/geojson', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'TU_API_KEY_AQUI',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                coordinates: [
+                [negocio[1], negocio[0]], // Longitud, Latitud
+                [visitante[1], visitante[0]]
+                ]
+            })
+            })
+            .then(res => res.json())
+            .then(data => {
+            const ruta = L.geoJSON(data, {
+                style: { color: 'blue', weight: 4 }
+            }).addTo(map);
+            map.fitBounds(ruta.getBounds());
+            })
+            .catch(err => console.error("Error al obtener la ruta:", err));
 
-            const route = L.polyline([negocio, visitante], { color: 'blue' }).addTo(map);
             map.fitBounds(route.getBounds());
         }, () => console.error("No se pudo obtener la ubicación"));
     }
