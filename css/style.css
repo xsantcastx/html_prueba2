@@ -1,282 +1,130 @@
 body {
-    padding-top: 50px; 
     font-family: Arial, sans-serif;
-}
-html, body {
-    height: 100%;
     margin: 0;
-    display: flex;
-    flex-direction: column;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
 }
-#content {
-    flex: 1; 
-}
+
 header {
-    background: #004080;
-    color: white;
-    padding: 15px;
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
     text-align: center;
 }
 
-
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 60px; 
-    background-color: #333;
-    z-index: 1000;
-}
-
-.navbar-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.navbar h1 {
+header h1 {
     margin: 0;
-    color: white;
-    font-size: 24px;
-}
-
-.navbar nav ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    margin: 0;
-    padding: 0;
-}
-
-.navbar nav ul li {
-    display: inline;
-}
-
-.navbar nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-.navbar a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    display: inline-block;
-}
-
-.navbar a.active {
-    background-color: #ff6600;
-    font-weight: bold;
-    border-radius: 5px;
 }
 
 nav ul {
-    list-style: none;
     padding: 0;
+    list-style: none;
+    text-align: center;
+    background: #444;
+    margin-top: 0; /* Ensure no top margin for nav */
+    margin-bottom: 20px;
 }
 
 nav ul li {
     display: inline;
-    margin-right: 10px;
 }
 
 nav ul li a {
-    color: white;
     text-decoration: none;
+    color: #fff;
+    padding: 10px 20px;
+    display: inline-block;
 }
 
-section {
+nav ul li a:hover,
+nav ul li a.active {
+    background: #555;
+}
+
+hr { /* Style for the <hr> in nav.php */
+    display: none; /* Hide it for now, or style it if preferred */
+}
+
+main {
     padding: 20px;
-    margin: 10px;
-}
-
-section {
-    top: 100px;
-}
-footer {
-    background-color: #222;
-    color: white;
-    text-align: center;
-    width: 100%;
-    
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-#contenedor-galeria {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-}
-
-#contenedor-galeria a img {
-    width: 200px;
-    height: 150px;
-    border-radius: 5px;
-    transition: transform 0.3s ease-in-out;
-}
-
-#contenedor-galeria a img:hover {
-    transform: scale(1.1);
-}
-form {
-    max-width: 600px;
+    max-width: 960px;
     margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background: #f8f8f8;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-fieldset {
-    margin-bottom: 15px;
-    padding: 10px;
+section {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+section:last-child {
+    border-bottom: none;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+form div {
+    margin-bottom: 10px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="date"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 8px;
     border: 1px solid #ddd;
+    box-sizing: border-box; /* Ensures padding doesn't affect overall width */
 }
 
-button {
-    margin-top: 10px;
-    padding: 8px 12px;
-    background: #004080;
-    color: white;
+form button {
+    background: #333;
+    color: #fff;
+    padding: 10px 15px;
     border: none;
     cursor: pointer;
 }
 
-button:hover {
-    background: #003366;
+form button:hover {
+    background: #555;
 }
 
-#total {
-    font-weight: bold;
-    font-size: 20px;
-    color: #004080;
-}
-#informacion {
+footer {
     text-align: center;
     padding: 20px;
-    background: #f5f5f5;
-    border-radius: 5px;
-}
-
-#mapa {
+    background: #333;
+    color: #fff;
     margin-top: 20px;
 }
 
-#map {
-    border-radius: 10px;
-}
-.redes-sociales {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-.redes-sociales a img {
-    transition: transform 0.3s;
-}
-
-.redes-sociales a img:hover {
-    transform: scale(1.2); /* Adds hover effect */
-}
-.grid-galeria {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    justify-content: center;
-}
-
-.grid-galeria a {
-    display: block;
-    overflow: hidden;
-    border-radius: 8px; /* Bordes redondeados */
-}
-
-.grid-galeria img {
-    width: 100%;
+/* Placeholder for images - adjust as needed */
+img {
+    max-width: 100%;
     height: auto;
-    object-fit: cover;
-    transition: transform 0.3s ease-in-out;
-      width: 100%;
-    height: 200px; /* Puedes ajustar esta altura según prefieras */
-    object-fit: cover;
-    flex-shrink: 0;
+    display: block;
+    margin-bottom: 10px;
 }
 
-.grid-galeria img:hover {
-    transform: scale(1.05); /* Efecto ligero al pasar el mouse */
+/* Basic responsive */
+@media (max-width: 768px) {
+    nav ul li {
+        display: block;
+        text-align: center;
+    }
+    nav ul li a {
+        display: block;
+    }
 }
-.fade-in {
-    opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.fade-in.appear {
-    opacity: 1;
-    transform: scale(1);
-}
-.carrusel {
-  position: relative;
-  max-width: 600px;
-  margin: 0 auto;
-  overflow: hidden;
-}
-
-.carrusel-imagenes {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-.carrusel-imagenes img {
-  width: 100%;
-  flex-shrink: 0;
-}
-
-#prev, #next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 2rem;
-  background-color: rgba(0,0,0,0.3);
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-}
-.carrusel-imagenes img {
-  width: 100%;
-  flex: 0 0 100%;
-  padding-bottom: 45px;
-}
-
-#prev { left: 0; }
-#next { right: 0; }
-
-.miniaturas {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-}
-
-.miniatura {
-  width: 80px;
-  height: 60px;
-  object-fit: cover;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
-}
-
-.miniatura:hover,
-.miniatura.activa {
-  opacity: 1;
-  border: 2px solid #444;
-}
-
