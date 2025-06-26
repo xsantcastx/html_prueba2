@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $direccion = $conn->real_escape_string(trim($_POST['direccion']));
     $sexo = $conn->real_escape_string(trim($_POST['sexo']));
     $usuario = $conn->real_escape_string(trim($_POST['usuario']));
-    $password = $_POST['password']; // Will be hashed
+    $password = $_POST['password']; 
     $confirm_password = $_POST['confirm_password'];
 
     // --- Validation ---
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_check_user->close();
     }
 
-    // If no errors, proceed with insertion
+    
     if (empty($errors)) {
         $conn->begin_transaction();
         try {
@@ -68,15 +68,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_data = $conn->prepare("INSERT INTO users_data (nombre, apellidos, email, telefono, fecha_nacimiento, direccion, sexo) VALUES (?, ?, ?, ?, ?, ?, ?)");
             $stmt_data->bind_param("sssssss", $nombre, $apellidos, $email, $telefono, $fecha_nacimiento, $direccion, $sexo);
             $stmt_data->execute();
-            $idUser = $stmt_data->insert_id; // Get the ID of the newly inserted user
+            $idUser = $stmt_data->insert_id; 
             $stmt_data->close();
 
             if ($idUser) {
                 // Hash the password
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                $rol = 'user'; // Default role
+                $rol = 'user'; 
 
-                // Insert into users_login
+                
                 $stmt_login = $conn->prepare("INSERT INTO users_login (idUser, usuario, password, rol) VALUES (?, ?, ?, ?)");
                 $stmt_login->bind_param("isss", $idUser, $usuario, $hashed_password, $rol);
                 $stmt_login->execute();
@@ -97,13 +97,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!empty($errors)) {
         $_SESSION['registration_errors'] = $errors;
-        // Store form data in session to repopulate the form (optional, good UX)
+        
         $_SESSION['form_data'] = $_POST;
         header("Location: ../registro.php");
         exit;
     }
 } else {
-    // Not a POST request, redirect to registration page
+    
     header("Location: ../registro.php");
     exit;
 }

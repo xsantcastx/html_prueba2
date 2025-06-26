@@ -53,6 +53,7 @@ $conn->close();
     </style>
 </head>
 <body>
+    <div class="wrapper">
     <?php include 'includes/nav.php'; ?>
 
     <header>
@@ -81,12 +82,11 @@ $conn->close();
                     <?php if (!empty($noticia['imagen']) && file_exists($noticia['imagen'])): ?>
                         <img src="<?php echo htmlspecialchars($noticia['imagen']); ?>" alt="<?php echo htmlspecialchars($noticia['titulo']); ?>">
                     <?php else: ?>
-                        <!-- Optional: placeholder if image is missing but record exists -->
-                        <!-- <img src="images/placeholder_news_default.jpg" alt="Imagen no disponible"> -->
+                        
                     <?php endif; ?>
                     <div>
                         <?php
-                        // nl2br to respect line breaks in the text, and htmlspecialchars for security
+                        
                         echo nl2br(htmlspecialchars($noticia['texto']));
                         ?>
                     </div>
@@ -98,5 +98,6 @@ $conn->close();
     <footer>
         <p>&copy; <?php echo date("Y"); ?> Mi Sitio Web. Todos los derechos reservados.</p>
     </footer>
+    </div>
 </body>
 </html>

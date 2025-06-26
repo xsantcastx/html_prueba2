@@ -12,13 +12,13 @@ require_once 'php/db_connection.php';
 
 $errors = [];
 $success_message = '';
-$all_users_list = []; // For dropdown
+$all_users_list = []; //  dropdown
 $selected_user_citas = [];
 $selected_userId = null;
 $selected_userName = '';
 
 
-// --- Fetch all users for the dropdown selector ---
+
 $stmt_users = $conn->prepare("SELECT ud.idUser, ud.nombre, ud.apellidos, ul.usuario FROM users_data ud JOIN users_login ul ON ud.idUser = ul.idUser ORDER BY ud.apellidos, ud.nombre");
 if ($stmt_users) {
     $stmt_users->execute();
@@ -32,10 +32,10 @@ if ($stmt_users) {
 }
 
 
-// --- Handle User Selection (GET request) ---
+
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['idUser_select'])) {
     $selected_userId = intval($_GET['idUser_select']);
-    // Validate $selected_userId exists
+    
     $stmt_check_user = $conn->prepare("SELECT nombre, apellidos FROM users_data WHERE idUser = ?");
     if ($stmt_check_user) {
         $stmt_check_user->bind_param("i", $selected_userId);
@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['idUser_select'])) {
             $selected_userName = htmlspecialchars($user_details['nombre'] . ' ' . $user_details['apellidos']);
         } else {
             $errors[] = "Usuario seleccionado no válido.";
-            $selected_userId = null; // Reset if invalid
+            $selected_userId = null; 
         }
         $stmt_check_user->close();
     } else {
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['idUser_select'])) {
 // --- CRUD Operations for Citas (POST requests, require $selected_userId) ---
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['selected_userId_form'])) {
     $selected_userId = intval($_POST['selected_userId_form']);
-    // Re-fetch user name for display after POST
+    
     $stmt_get_name = $conn->prepare("SELECT nombre, apellidos FROM users_data WHERE idUser = ?");
     if ($stmt_get_name) {
         $stmt_get_name->bind_param("i", $selected_userId);
@@ -79,8 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['selected_userId_form']
             $errors[] = "Fecha, hora y motivo son obligatorios para crear la cita.";
         } else {
             $fecha_cita_dt_str = $fecha_cita_str . ' ' . $hora_cita_str . ':00';
-            // Admin might be able to create past citas for record keeping, or you might enforce future only.
-            // For this example, let's allow any date for admin.
+            
             $fecha_cita_sql = (new DateTime($fecha_cita_dt_str))->format('Y-m-d H:i:s');
 
             $stmt = $conn->prepare("INSERT INTO citas (idUser, fecha_cita, motivo_cita) VALUES (?, ?, ?)");
@@ -177,6 +176,7 @@ $conn->close();
     </style>
 </head>
 <body>
+    <div class="wrapper">
     <?php include 'includes/nav.php'; ?>
 
     <header>
@@ -237,7 +237,7 @@ $conn->close();
                 </form>
             </section>
 
-            <!-- Lista de Citas del Usuario Seleccionado -->
+            
             <section class="user-citas-section">
                 <h3>Citas Programadas</h3>
                 <?php if (empty($selected_user_citas)): ?>
@@ -302,5 +302,6 @@ $conn->close();
             }
         }
     </script>
+    </div>
 </body>
 </html>

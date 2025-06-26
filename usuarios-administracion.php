@@ -3,7 +3,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Check if user is logged in as admin, otherwise redirect
+
 if (!isset($_SESSION['idUser']) || !isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
     header("Location: login.php?error=unauthorized");
     exit;
@@ -19,7 +19,7 @@ $all_users = []; // To store all users for listing
 
 // Create New User
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['create_user'])) {
-    // Sanitize and retrieve form data
+    
     $nombre = $conn->real_escape_string(trim($_POST['nombre']));
     $apellidos = $conn->real_escape_string(trim($_POST['apellidos']));
     $email = $conn->real_escape_string(trim($_POST['email']));
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['create_user'])) {
     $password = $_POST['password_new']; // Will be hashed
     $rol_new = $conn->real_escape_string(trim($_POST['rol_new']));
 
-    // Validation
+    
     if (empty($nombre)) $errors[] = "El nombre es obligatorio.";
     if (empty($apellidos)) $errors[] = "Los apellidos son obligatorios.";
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "Email inválido o vacío.";
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['create_user'])) {
     if (empty($password)) $errors[] = "La contraseña es obligatoria.";
     if (empty($rol_new) || !in_array($rol_new, ['user', 'admin'])) $errors[] = "Rol inválido.";
 
-    // Check if email or username already exists
+    
     if (empty($errors)) {
         $stmt_check = $conn->prepare("SELECT idUser FROM users_data WHERE email = ?");
         $stmt_check->bind_param("s", $email);
@@ -95,18 +95,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_user'])) {
     $sexo_edit = $conn->real_escape_string(trim($_POST['sexo_edit']));
     $usuario_edit = $conn->real_escape_string(trim($_POST['usuario_edit']));
     $rol_edit = $conn->real_escape_string(trim($_POST['rol_edit']));
-    $password_edit = $_POST['password_edit']; // Optional new password
+    $password_edit = $_POST['password_edit']; 
 
-    // Validation (similar to create, but for existing user context)
+    
     if (empty($nombre_edit)) $errors[] = "El nombre (editado) es obligatorio.";
-    // ... (add all other necessary validations for edited fields)
+    
     if (empty($email_edit) || !filter_var($email_edit, FILTER_VALIDATE_EMAIL)) $errors[] = "Email (editado) inválido o vacío.";
     if (empty($usuario_edit)) $errors[] = "Nombre de usuario (editado) es obligatorio.";
     if (empty($rol_edit) || !in_array($rol_edit, ['user', 'admin'])) $errors[] = "Rol (editado) inválido.";
      if ($rol_edit === 'admin' && $idUser_edit === $_SESSION['idUser'] && $rol_edit !== $_SESSION['rol']) {
-        // Prevent admin from changing their own role from admin to user if they are the one editing
-        // This check needs to be more robust if there are multiple admins or specific rules
-        // For now, we fetch current role from DB before update for self-edit.
+        
         $stmt_check_self_role = $conn->prepare("SELECT rol FROM users_login WHERE idUser = ?");
         $stmt_check_self_role->bind_param("i", $idUser_edit);
         $stmt_check_self_role->execute();
@@ -118,16 +116,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_user'])) {
     }
 
 
-    // Check for email/username conflicts (if changed)
+    
     if (empty($errors)) {
-        // Check email
+        
         $stmt_check_email = $conn->prepare("SELECT idUser FROM users_data WHERE email = ? AND idUser != ?");
         $stmt_check_email->bind_param("si", $email_edit, $idUser_edit);
         $stmt_check_email->execute();
         if ($stmt_check_email->get_result()->num_rows > 0) $errors[] = "El email (editado) ya está registrado por otro usuario.";
         $stmt_check_email->close();
 
-        // Check username
+        
         $stmt_check_user = $conn->prepare("SELECT idLogin FROM users_login WHERE usuario = ? AND idUser != ?");
         $stmt_check_user->bind_param("si", $usuario_edit, $idUser_edit);
         $stmt_check_user->execute();
@@ -165,10 +163,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_user'])) {
             $conn->commit();
             $success_message = "Usuario ID " . $idUser_edit . " actualizado exitosamente.";
 
-            // If admin updated their own user data (not role to user), update session
+            
             if ($idUser_edit == $_SESSION['idUser']) {
-                 $_SESSION['usuario'] = $usuario_edit; // Update session username if changed
-                 // Role update for self is tricky, usually handled by re-login or specific logic
+                 $_SESSION['usuario'] = $usuario_edit; 
+                
             }
 
         } catch (Exception $e) {
@@ -185,15 +183,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_user'])) {
     if ($idUser_delete === $_SESSION['idUser']) {
         $errors[] = "No puedes eliminar tu propia cuenta de administrador.";
     } else {
-        // It's good practice to ensure the user exists before attempting to delete,
-        // but CASCADE CONSTRAINTS in DB should handle related data.
-        // For users_login, idUser is UNIQUE and FK to users_data.idUser with ON DELETE CASCADE.
-        // So, deleting from users_data should cascade to users_login.
-        // Also, citas and noticias have FK to users_data.idUser with ON DELETE CASCADE.
+        
 
         $conn->begin_transaction();
         try {
-            // Deleting from users_data will trigger cascade delete on users_login, citas, noticias
+            
             $stmt_delete = $conn->prepare("DELETE FROM users_data WHERE idUser = ?");
             $stmt_delete->bind_param("i", $idUser_delete);
             $stmt_delete->execute();
@@ -202,22 +196,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_user'])) {
                 $conn->commit();
                 $success_message = "Usuario ID " . $idUser_delete . " y todos sus datos relacionados han sido eliminados exitosamente.";
             } else {
-                // This might happen if the user was already deleted or ID was invalid
+                
                 $conn->rollback();
                 $errors[] = "No se encontró el usuario a eliminar o ya fue eliminado (ID: " . $idUser_delete . ").";
             }
             $stmt_delete->close();
         } catch (mysqli_sql_exception $e) {
             $conn->rollback();
-            // Check for foreign key constraint violation if ON DELETE SET NULL was used for some tables
-            // and those tables prevent NULL on FK. But here we use CASCADE.
+            
             $errors[] = "Error al eliminar usuario: " . $e->getMessage();
         }
     }
 }
 
-// --- Fetch All Users for Listing ---
-// Joined query to get all necessary info
+
 $sql_fetch_users = "SELECT ud.idUser, ud.nombre, ud.apellidos, ud.email, ud.telefono, ud.fecha_nacimiento, ud.direccion, ud.sexo, ul.usuario, ul.rol
                     FROM users_data ud
                     JOIN users_login ul ON ud.idUser = ul.idUser
@@ -231,7 +223,7 @@ if ($result_users) {
     $errors[] = "Error al cargar la lista de usuarios: " . $conn->error;
 }
 
-// $conn->close(); // Close connection at the end of the script or after all DB operations
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -254,6 +246,7 @@ if ($result_users) {
     </style>
 </head>
 <body>
+<div class="wrapper">
     <?php include 'includes/nav.php'; ?>
 
     <header>
@@ -308,7 +301,7 @@ if ($result_users) {
 
         <hr>
 
-        <!-- Lista de Usuarios -->
+        
         <h2>Lista de Usuarios Existentes</h2>
         <table class="styled-table">
             <thead>
@@ -402,7 +395,7 @@ if ($result_users) {
         const form = document.getElementById('editUserForm');
 
         function openEditModal(userData) {
-            form.reset(); // Clear previous data
+            form.reset(); 
             document.getElementById('edit_idUser').value = userData.idUser;
             document.getElementById('edit_nombre').value = userData.nombre;
             document.getElementById('edit_apellidos').value = userData.apellidos;
@@ -426,6 +419,7 @@ if ($result_users) {
             }
         }
     </script>
+</div>
 </body>
 </html>
 <?php $conn->close(); ?>

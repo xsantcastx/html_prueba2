@@ -4,8 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['idUser']) || $_SESSION['rol'] !== 'user') {
-    // Redirect if not logged in as a user
-    // Admins will have a different page or combined functionality
+    
     header("Location: login.php");
     exit;
 }
@@ -16,9 +15,7 @@ $errors = [];
 $success_message = '';
 $user_citas = [];
 
-// --- Handle Form Submissions ---
 
-// Request New Cita
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['request_cita'])) {
     $fecha_cita_str = trim($_POST['fecha_cita']);
     $hora_cita_str = trim($_POST['hora_cita']);
@@ -110,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_cita'])) {
     $idCita_delete = intval($_POST['idCita']);
     $now = new DateTime();
 
-    // Verify the cita belongs to the user and is in the future before deleting
+    
     $stmt_check = $conn->prepare("SELECT fecha_cita FROM citas WHERE idCita = ? AND idUser = ?");
     $stmt_check->bind_param("ii", $idCita_delete, $idUser);
     $stmt_check->execute();
@@ -172,6 +169,7 @@ $conn->close();
     </style>
 </head>
 <body>
+    <div class="wrapper">
     <?php include 'includes/nav.php'; ?>
 
     <header>
@@ -287,5 +285,6 @@ $conn->close();
             }
         }
     </script>
+    </div> 
 </body>
 </html>

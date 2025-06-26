@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="wrapper">
     <?php
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
@@ -58,5 +59,6 @@
     <footer>
         <p>&copy; <?php echo date("Y"); ?> Mi Sitio Web. Todos los derechos reservados.</p>
     </footer>
+    </div>
 </body>
 </html>

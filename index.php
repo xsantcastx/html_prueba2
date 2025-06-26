@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="wrapper">
     <?php
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
@@ -16,7 +17,7 @@
 
     <header>
         <h1>Bienvenido a Nuestro Sitio Web</h1>
-        <p>Su fuente de información y servicios.</p>
+        <p>Tu fuente confiable de información, noticias y servicios digitales</p>
     </header>
 
     <main>
@@ -33,31 +34,34 @@
             echo '</div>';
         }
         ?>
+
         <section id="about">
             <h2>Sobre Nosotros</h2>
-            <p>Somos una empresa ficticia dedicada a ofrecer soluciones innovadoras. Nuestro equipo de programadores web está aquí para ayudarle.</p>
-            <img src="images/placeholder_team.jpg" alt="Equipo de desarrollo" style="width:100%;max-width:600px;">
+            <p>Somos una plataforma creada por y para desarrolladores web. Aquí podrás acceder a noticias, gestionar citas y administrar tus datos de forma segura.</p>
+            <p>Nuestra misión es facilitar el desarrollo y la gestión de información en línea, conectando usuarios con herramientas prácticas y actualizadas.</p>
+            <img src="images/placeholder_team.jpg" alt="Equipo de desarrollo" style="width:100%;max-width:600px; border-radius: 8px; margin-top: 15px;">
         </section>
 
         <section id="services">
             <h2>Nuestros Servicios</h2>
-            <p>Ofrecemos una variedad de servicios para satisfacer sus necesidades. Desde desarrollo web hasta consultoría.</p>
-            <ul>
-                <li><a href="noticias.php">Últimas Noticias</a></li>
-                <li><a href="registro.php">Regístrese</a></li>
-                <li><a href="login.php">Iniciar Sesión</a></li>
-            </ul>
+            <p>Te ofrecemos las siguientes funcionalidades para aprovechar al máximo el sitio:</p>
+            <div class="service-links">
+                <a class="btn-link" href="noticias.php">📰 Ver Últimas Noticias</a>
+                <a class="btn-link" href="registro.php">📝 Crear una Cuenta</a>
+                <a class="btn-link" href="login.php">🔐 Iniciar Sesión</a>
+            </div>
         </section>
 
         <section id="contact">
             <h2>Contacto</h2>
-            <p>Póngase en contacto con nosotros para más información.</p>
-            <p>Email: info@example.com</p>
+            <p>¿Tienes dudas o sugerencias? Estamos aquí para ayudarte.</p>
+            <p><strong>Email:</strong> <a href="mailto:xsantcastx@outlook.com">xsantcastx@outlook.com</a></p>
         </section>
     </main>
 
     <footer>
         <p>&copy; <?php echo date("Y"); ?> Mi Sitio Web. Todos los derechos reservados.</p>
-    </footer>
+    </footer>   
+    </div>
 </body>
 </html>

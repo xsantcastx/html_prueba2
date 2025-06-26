@@ -28,7 +28,7 @@ if ($stmt) {
     if ($result->num_rows === 1) {
         $userData = $result->fetch_assoc();
     } else {
-        // Should not happen if session is valid and user exists
+        
         $update_errors[] = "Error: No se pudieron cargar los datos del usuario.";
     }
     $stmt->close();
@@ -154,6 +154,7 @@ $conn->close();
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="wrapper">
     <?php include 'includes/nav.php'; ?>
 
     <header>
@@ -253,5 +254,6 @@ $conn->close();
     <footer>
         <p>&copy; <?php echo date("Y"); ?> Mi Sitio Web. Todos los derechos reservados.</p>
     </footer>
+    </div>
 </body>
 </html>

@@ -1,64 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #f8f9fa;
+    color: #343a40;
 }
-
+html, body {
+    height: 100%;
+    margin: 0;
+}
 header {
-    background: #333;
-    color: #fff;
-    padding: 1rem 0;
+    background-color: #343a40; /* fondo gris oscuro */
+    color: #f8f9fa; /* texto claro */
+    padding: 2rem 1rem;
     text-align: center;
+    border-bottom: 3px solid #495057;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 header h1 {
     margin: 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #ffffff;
 }
+
+header p {
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    color: #ced4da;
+}
+
+
+
 
 nav ul {
     padding: 0;
     list-style: none;
     text-align: center;
-    background: #444;
-    margin-top: 0; /* Ensure no top margin for nav */
-    margin-bottom: 20px;
+    background: #343a40;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 nav ul li {
-    display: inline;
+    margin: 0;
 }
 
 nav ul li a {
     text-decoration: none;
-    color: #fff;
-    padding: 10px 20px;
+    color: #f8f9fa;
+    padding: 12px 20px;
     display: inline-block;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 nav ul li a:hover,
 nav ul li a.active {
-    background: #555;
-}
-
-hr { /* Style for the <hr> in nav.php */
-    display: none; /* Hide it for now, or style it if preferred */
+    background: #495057;
+    color: #fff;
+    border-radius: 4px;
 }
 
 main {
-    padding: 20px;
+    margin-top: 0;
+    flex: 1;
+    padding: 30px 20px;
     max-width: 960px;
-    margin: auto;
+    margin: 30px auto;
     background: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 }
 
+
 section {
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #dee2e6;
 }
 
 section:last-child {
@@ -66,16 +90,17 @@ section:last-child {
 }
 
 h1, h2 {
-    color: #333;
+    color: #212529;
 }
 
 form div {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 form label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
+    font-weight: 600;
 }
 
 form input[type="text"],
@@ -85,46 +110,95 @@ form input[type="date"],
 form textarea,
 form select {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+    border-color: #495057;
+    outline: none;
 }
 
 form button {
-    background: #333;
+    background: #212529;
     color: #fff;
-    padding: 10px 15px;
+    padding: 12px 20px;
     border: none;
+    border-radius: 6px;
     cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
 }
 
 form button:hover {
-    background: #555;
+    background: #343a40;
 }
 
 footer {
     text-align: center;
-    padding: 20px;
-    background: #333;
+    padding: 25px;
+    background: #212529;
     color: #fff;
-    margin-top: 20px;
+    margin-top: 40px;
+    font-size: 0.9rem;
 }
 
-/* Placeholder for images - adjust as needed */
 img {
     max-width: 100%;
     height: auto;
     display: block;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     margin-bottom: 10px;
 }
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-/* Basic responsive */
+/* Responsive */
 @media (max-width: 768px) {
-    nav ul li {
-        display: block;
-        text-align: center;
+    nav ul {
+        flex-direction: column;
     }
+
     nav ul li a {
         display: block;
+        padding: 12px;
     }
+
+    main {
+        flex: 1;
+        margin: 20px;
+        padding: 20px;
+    }
+}
+.service-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.btn-link {
+    background: #343a40;
+    color: #fff;
+    padding: 12px 20px;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+    display: inline-block;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.btn-link:hover {
+    background: #495057;
+    transform: translateY(-2px);
 }

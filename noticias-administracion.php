@@ -14,22 +14,22 @@ $adminId = $_SESSION['idUser'];
 $errors = [];
 $success_message = '';
 $all_noticias = [];
-$editing_noticia = null; // Store noticia data if in edit mode
+$editing_noticia = null; 
 
 // Define upload path
 define('UPLOAD_DIR_NOTICIAS', 'uploads/noticias/');
 if (!is_dir(UPLOAD_DIR_NOTICIAS)) {
-    mkdir(UPLOAD_DIR_NOTICIAS, 0777, true); // Create if not exists
+    mkdir(UPLOAD_DIR_NOTICIAS, 0777, true);
 }
 
-// --- Handle News Article CRUD ---
 
-// Create or Update News Article
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['create_noticia']) || isset($_POST['update_noticia']))) {
     $titulo = $conn->real_escape_string(trim($_POST['titulo']));
-    $texto = $conn->real_escape_string(trim($_POST['texto'])); // Text can be long
+    $texto = $conn->real_escape_string(trim($_POST['texto'])); 
     $fecha = $conn->real_escape_string(trim($_POST['fecha'])); // Should be YYYY-MM-DD
-    $imagen_path = ''; // Initialize image path
+    $imagen_path = ''; 
 
     // Validation
     if (empty($titulo)) $errors[] = "El título es obligatorio.";
@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['create_noticia']) || 
     } elseif (isset($_POST['update_noticia']) && !empty($_POST['current_imagen_path'])) {
         // Keep existing image if not uploading a new one during update
         $imagen_path = $_POST['current_imagen_path'];
-    } elseif (!isset($_POST['update_noticia'])) { // Required for create if no update
+    } elseif (!isset($_POST['update_noticia'])) { 
          $errors[] = "La imagen es obligatoria para crear una nueva noticia.";
     }
 
@@ -187,10 +187,19 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['edit_idNoticia'])) {
 
 
 // --- Fetch All News Articles for Listing ---
-$sql_fetch_noticias = "SELECT n.idNoticia, n.titulo, n.imagen, LEFT(n.texto, 100) as extracto_texto, n.fecha, ud.usuario as autor_usuario
-                       FROM noticias n
-                       JOIN users_data ud ON n.idUser = ud.idUser
-                       ORDER BY n.fecha DESC, n.idNoticia DESC";
+$sql_fetch_noticias = "
+    SELECT 
+        n.idNoticia, 
+        n.titulo, 
+        n.imagen, 
+        LEFT(n.texto, 100) AS extracto_texto, 
+        n.fecha, 
+        ul.usuario AS autor_usuario
+    FROM noticias n
+    JOIN users_data ud ON n.idUser = ud.idUser
+    JOIN users_login ul ON ud.idUser = ul.idUser
+    ORDER BY n.fecha DESC, n.idNoticia DESC";
+
 $result_noticias = $conn->query($sql_fetch_noticias);
 if ($result_noticias) {
     while ($row = $result_noticias->fetch_assoc()) {
@@ -219,6 +228,7 @@ $conn->close();
     </style>
 </head>
 <body>
+    <div class="wrapper">
     <?php include 'includes/nav.php'; ?>
 
     <header>
@@ -323,5 +333,6 @@ $conn->close();
     <footer>
         <p>&copy; <?php echo date("Y"); ?> Mi Sitio Web. Todos los derechos reservados.</p>
     </footer>
+    </div>
 </body>
 </html>

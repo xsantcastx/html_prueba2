@@ -28,7 +28,7 @@ if (isset($_SESSION['idUser'])) {
                 'citas-administracion.php' => 'Gestión Citas',
                 'noticias-administracion.php' => 'Gestión Noticias',
                 'perfil.php' => 'Perfil',
-                'php/logout.php' => 'Cerrar Sesión' // Changed from cerrar_sesion.php
+                'php/logout.php' => 'Cerrar Sesión' 
             ];
         } elseif ($_SESSION['rol'] === 'user') {
             // User navigation
@@ -37,7 +37,7 @@ if (isset($_SESSION['idUser'])) {
                 'noticias.php' => 'Noticias',
                 'citaciones.php' => 'Mis Citas',
                 'perfil.php' => 'Perfil',
-                'php/logout.php' => 'Cerrar Sesión' // Changed from cerrar_sesion.php
+                'php/logout.php' => 'Cerrar Sesión'
             ];
         }
     }
@@ -53,4 +53,4 @@ if (isset($_SESSION['idUser'])) {
         ?>
     </ul>
 </nav>
-<hr> <!-- Basic separator -->
+<hr> 

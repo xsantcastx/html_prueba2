@@ -30,10 +30,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($result->num_rows === 1) {
                 $user_row = $result->fetch_assoc();
                 if (password_verify($password, $user_row['password'])) {
-                    // Password is correct, set session variables
+                    
                     $_SESSION['idUser'] = $user_row['idUser'];
-                    $_SESSION['usuario'] = $usuario; // Or $user_row['usuario'] if you selected it
-                    $_SESSION['nombre'] = $user_row['nombre']; // Store user's actual name
+                    $_SESSION['usuario'] = $usuario; 
+                    $_SESSION['nombre'] = $user_row['nombre']; 
                     $_SESSION['rol'] = $user_row['rol'];
 
                     // Regenerate session ID for security
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!empty($errors)) {
         $_SESSION['login_errors'] = $errors;
-        $_SESSION['login_form_data'] = $_POST; // To repopulate username
+        $_SESSION['login_form_data'] = $_POST; 
         header("Location: ../login.php");
         exit;
     }
